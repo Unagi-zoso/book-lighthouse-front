@@ -6,6 +6,7 @@ import { SelectedBooks } from './components/SelectedBooks';
 import { OptimalLibraries } from './components/OptimalLibraries';
 import { Card, CardContent } from './components/ui/card';
 import { Waves, BookOpen } from 'lucide-react';
+import { useAnalytics } from './hooks/useAnalytics';
 import './App.css';
 
 function App() {
@@ -13,6 +14,9 @@ function App() {
   const [optimalSets, setOptimalSets] = useState<OptimalSet[]>([]);
   const [isCalculating, setIsCalculating] = useState(false);
   const [hasCalculated, setHasCalculated] = useState(false);
+  
+  // 애널리틱스 훅 사용
+  const { trackBookSelect, trackOptimalCalculation } = useAnalytics();
 
   const handleBookSelect = (book: Book) => {
     setSelectedBooks(prev => {
@@ -21,6 +25,8 @@ function App() {
       if (isAlreadySelected) {
         return prev.filter(selected => selected.isbn !== book.isbn);
       } else if (prev.length < 3) {
+        // 책 선택 이벤트 추적
+        trackBookSelect(book.title, book.isbn);
         return [...prev, book];
       }
       
@@ -36,6 +42,10 @@ function App() {
     if (selectedBooks.length === 0) return;
 
     setIsCalculating(true);
+    
+    // 최적화 계산 이벤트 추적
+    trackOptimalCalculation(selectedBooks.length);
+    
     try {
       const isbns = selectedBooks.map(book => book.isbn13);
       const response = await calculateOptimalLibraries(isbns);
