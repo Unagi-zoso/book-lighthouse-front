@@ -12,7 +12,7 @@ declare global {
 export const useAnalytics = () => {
   useEffect(() => {
     // GTM 로드 확인
-    if (typeof window !== 'undefined' && window.dataLayer) {
+    if (window.dataLayer) {
       // 초기 페이지뷰 이벤트
       window.dataLayer.push({
         event: 'page_view',
