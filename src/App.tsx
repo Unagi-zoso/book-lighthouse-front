@@ -20,7 +20,7 @@ function App() {
   const { trackBookSelect, trackOptimalCalculation } = useAnalytics();
   
   // Sentry 훅 사용
-  const { captureError, addBreadcrumb, setContext } = useSentry();
+  const { captureError, addBreadcrumb } = useSentry();
 
   const handleBookSelect = (book: Book) => {
     setSelectedBooks(prev => {
