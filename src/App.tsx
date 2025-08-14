@@ -134,6 +134,31 @@ function App() {
           </Card>
         )}
       </main>
+
+      {/* Footer */}
+      <footer className="bg-white border-t border-gray-100 mt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <div className="flex items-center space-x-2">
+              <div className="relative">
+                <Waves className="w-5 h-5 text-blue-600" />
+                <BookOpen className="w-3 h-3 text-purple-600 absolute -bottom-0.5 -right-0.5" />
+              </div>
+              <span className="text-gray-600 font-medium">책등대</span>
+            </div>
+            
+            <div className="flex items-center space-x-6 text-sm text-gray-600">
+              <a href="/privacy.html" className="hover:text-blue-600 transition-colors">
+                개인정보처리방침
+              </a>
+              <span>•</span>
+              <span>책바다 서비스 비공식 도구</span>
+              <span>•</span>
+              <span className="text-gray-500">© 2025</span>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
