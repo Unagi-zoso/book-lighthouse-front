@@ -9,7 +9,8 @@
     "serve": "serve -s build -l 3000"
   },
   "dependencies": {
-    "@types/node": "^16.18.0",
+    "@sentry/react": "^10.5.0",
+    "@types/node": "^20.19.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "clsx": "^2.1.1",
@@ -44,6 +45,7 @@
     "postcss": "^8.4.32",
     "serve": "^14.2.1",
     "tailwindcss": "^3.3.6",
-    "vite": "^7.1.2"
+    "vite": "^7.1.2",
+    "@types/node": "^20.19.0"
   }
 }
