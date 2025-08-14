@@ -45,8 +45,22 @@ export const useSentry = () => {
   };
 
   // 성능 추적 시작
-  const startTransaction = (name: string, operation: string) => {
-    return Sentry.startTransaction({ name, op: operation });
+  const measurePerformance = async <T>(
+      name: string,
+      operation: string,
+      fn: () => Promise<T>
+  ): Promise<T> => {
+    const transaction = Sentry.startTransaction({ name, op: operation });
+    try {
+      const result = await fn();
+      transaction.setStatus('ok');
+      return result;
+    } catch (error) {
+      transaction.setStatus('internal_error');
+      throw error;
+    } finally {
+      transaction.finish(); // 자동으로 완료
+    }
   };
 
   // 브레드크럼 추가 (사용자 행동 추적)
@@ -65,7 +79,7 @@ export const useSentry = () => {
     setContext,
     captureError,
     captureMessage,
-    startTransaction,
+    measurePerformance,
     addBreadcrumb,
   };
 };
