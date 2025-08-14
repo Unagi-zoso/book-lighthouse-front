@@ -7,6 +7,7 @@ import { OptimalLibraries } from './components/OptimalLibraries';
 import { Card, CardContent } from './components/ui/card';
 import { Waves, BookOpen } from 'lucide-react';
 import { useAnalytics } from './hooks/useAnalytics';
+import { useSentry } from './hooks/useSentry';
 import './App.css';
 
 function App() {
@@ -17,6 +18,9 @@ function App() {
   
   // 애널리틱스 훅 사용
   const { trackBookSelect, trackOptimalCalculation } = useAnalytics();
+  
+  // Sentry 훅 사용
+  const { captureError, addBreadcrumb } = useSentry();
 
   const handleBookSelect = (book: Book) => {
     setSelectedBooks(prev => {
@@ -46,13 +50,36 @@ function App() {
     // 최적화 계산 이벤트 추적
     trackOptimalCalculation(selectedBooks.length);
     
+    // Sentry 브레드크럼 추가
+    addBreadcrumb('Starting optimal calculation', 'user_action', {
+      book_count: selectedBooks.length,
+      book_isbns: selectedBooks.map(book => book.isbn)
+    });
+    
     try {
       const isbns = selectedBooks.map(book => book.isbn13);
       const response = await calculateOptimalLibraries(isbns);
       setOptimalSets(response.data.optimalSets);
       setHasCalculated(true);
+      
+      // 성공 로그
+      addBreadcrumb('Optimal calculation completed', 'api_success', {
+        result_count: response.data.optimalSets.length
+      });
+      
     } catch (error) {
       console.error('Calculation failed:', error);
+      
+      // Sentry에 에러 리포팅
+      captureError(error as Error, {
+        action: 'calculate_optimal_libraries',
+        book_count: selectedBooks.length,
+        selected_books: selectedBooks.map(book => ({
+          title: book.title,
+          isbn: book.isbn
+        }))
+      });
+      
       setOptimalSets([]);
     } finally {
       setIsCalculating(false);
