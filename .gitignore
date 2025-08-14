@@ -25,6 +25,9 @@ yarn-error.log*
 
 # IDE settings
 .idea/
+!.idea/codeStyles/
+!.idea/inspectionProfiles/
+!.idea/runConfigurations/
 *.iml
 *.iws
 .vscode/
