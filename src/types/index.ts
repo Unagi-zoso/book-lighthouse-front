@@ -29,22 +29,26 @@ export interface Library {
   address: string;
 }
 
-export interface OptimalBook {
-  isbn: string;
-  title: string;
-  cover: string;
-  libraries: Library[];
+export interface LibraryWithBooks {
+  lib_code: number;
+  lib_name: string;
+  address: string | null;
+  books: {
+    isbn: string;
+    title: string;
+    cover: string;
+  }[];
 }
 
-export interface OptimalSet {
-  coverageRate: number;
-  books: OptimalBook[];
+export interface OptimalLibrarySet {
+  libraries: LibraryWithBooks[];
+  coverageCount: number; // 커버하는 책 수
 }
 
 export interface OptimalResponse {
   success: boolean;
   data: {
-    optimalSets: OptimalSet[];
+    optimalSets: OptimalLibrarySet[];
   };
 }
 

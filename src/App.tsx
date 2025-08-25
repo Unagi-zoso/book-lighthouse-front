@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Book, OptimalSet } from './types';
+import { Book, OptimalLibrarySet } from './types';
 import { calculateOptimalLibraries } from './lib/api';
 import { BookSearch } from './components/BookSearch';
 import { SelectedBooks } from './components/SelectedBooks';
@@ -12,7 +12,7 @@ import './App.css';
 
 function App() {
   const [selectedBooks, setSelectedBooks] = useState<Book[]>([]);
-  const [optimalSets, setOptimalSets] = useState<OptimalSet[]>([]);
+  const [optimalSets, setOptimalSets] = useState<OptimalLibrarySet[]>([]);
   const [isCalculating, setIsCalculating] = useState(false);
   const [hasCalculated, setHasCalculated] = useState(false);
   
