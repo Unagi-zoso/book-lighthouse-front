@@ -2,7 +2,9 @@ import { SearchResponse, OptimalResponse } from '../types';
 
 const API_HOST = import.meta.env.VITE_API_HOST || 'http://localhost:8000';
 const API_PATH = '/api/v1';
+const API_V2_PATH = '/api/v2';
 const BASE_URL = `${API_HOST}${API_PATH}`;
+const BASE_URL_V2 = `${API_HOST}${API_V2_PATH}`;
 
 export async function searchBooks(title: string, page: number = 1, limit: number = 10): Promise<SearchResponse> {
   const params = new URLSearchParams({
@@ -21,7 +23,7 @@ export async function searchBooks(title: string, page: number = 1, limit: number
 }
 
 export async function calculateOptimalLibraries(isbns: string[]): Promise<OptimalResponse> {
-  const response = await fetch(`${BASE_URL}/libraries/calculate-optimal-library-set`, {
+  const response = await fetch(`${BASE_URL_V2}/libraries/calculate-optimal-library-set`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
