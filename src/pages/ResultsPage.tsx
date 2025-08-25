@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { Book, OptimalLibrarySet } from '../types';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
@@ -17,10 +17,16 @@ export function ResultsPage() {
   const [selectedBooksModal, setSelectedBooksModal] = useState(false);
   
   const state = location.state as LocationState;
+  const isInvalidState = !state || !state.optimalSets;
   
-  if (!state || !state.optimalSets) {
-    // 직접 접근한 경우 홈으로 리다이렉트
-    navigate('/');
+  useEffect(() => {
+    if (isInvalidState) {
+      // 직접 접근한 경우 홈으로 리다이렉트
+      navigate('/');
+    }
+  }, [isInvalidState, navigate]);
+  
+  if (isInvalidState) {
     return null;
   }
   
