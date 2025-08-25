@@ -4,7 +4,7 @@ import { Book, OptimalLibrarySet } from '../types';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
-import { MapPin, Building2, CheckCircle, ArrowLeft, Eye, Waves, BookOpen } from 'lucide-react';
+import { MapPin, Building2, CheckCircle, ArrowLeft, Eye, Waves, BookOpen, ExternalLink } from 'lucide-react';
 
 interface LocationState {
   optimalSets: OptimalLibrarySet[];
@@ -53,12 +53,25 @@ export function ResultsPage() {
                   </p>
                 </div>
               </div>
-              <Link to="/">
-                <Button variant="outline" className="flex items-center gap-2">
-                  <ArrowLeft className="w-4 h-4" />
-                  다시 검색
-                </Button>
-              </Link>
+              <div className="flex items-center gap-2">
+                {import.meta.env.VITE_BOOKBADA_URL && (
+                  <a
+                    href={import.meta.env.VITE_BOOKBADA_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-xs sm:text-sm font-medium"
+                  >
+                    <span>책바다 바로가기</span>
+                    <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
+                  </a>
+                )}
+                <Link to="/">
+                  <Button variant="outline" className="flex items-center gap-2">
+                    <ArrowLeft className="w-4 h-4" />
+                    다시 검색
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </header>
@@ -106,6 +119,17 @@ export function ResultsPage() {
               </div>
             </div>
             <div className="flex items-center gap-2">
+              {import.meta.env.VITE_BOOKBADA_URL && (
+                <a
+                  href={import.meta.env.VITE_BOOKBADA_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-xs sm:text-sm font-medium"
+                >
+                  <span>책바다 바로가기</span>
+                  <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
+                </a>
+              )}
               <Button
                 variant="outline"
                 onClick={() => setSelectedBooksModal(true)}

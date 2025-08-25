@@ -5,7 +5,7 @@ import { calculateOptimalLibraries } from '../lib/api';
 import { BookSearch } from '../components/BookSearch';
 import { SelectedBooks } from '../components/SelectedBooks';
 import { Card, CardContent } from '../components/ui/card';
-import { Waves, BookOpen } from 'lucide-react';
+import { Waves, BookOpen, ExternalLink } from 'lucide-react';
 import { useAnalytics } from '../hooks/useAnalytics';
 import { useSentry } from '../hooks/useSentry';
 
@@ -96,19 +96,33 @@ export function HomePage() {
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-sm border-b border-blue-100 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-          <div className="flex items-center gap-2 sm:gap-3">
-            <div className="relative">
-              <Waves className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" />
-              <BookOpen className="w-3 h-3 sm:w-4 sm:h-4 text-purple-600 absolute -bottom-0.5 -right-0.5 sm:-bottom-1 sm:-right-1" />
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="relative">
+                <Waves className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" />
+                <BookOpen className="w-3 h-3 sm:w-4 sm:h-4 text-purple-600 absolute -bottom-0.5 -right-0.5 sm:-bottom-1 sm:-right-1" />
+              </div>
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  책등대
+                </h1>
+                <p className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1">
+                  책바다 서비스를 위한 최적 도서관 조합 도구
+                </p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                책등대
-              </h1>
-              <p className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1">
-                책바다 서비스를 위한 최적 도서관 조합 도구
-              </p>
-            </div>
+            
+            {import.meta.env.VITE_BOOKBADA_URL && (
+              <a
+                href={import.meta.env.VITE_BOOKBADA_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-xs sm:text-sm font-medium"
+              >
+                <span>책바다 바로가기</span>
+                <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
+              </a>
+            )}
           </div>
         </div>
       </header>
