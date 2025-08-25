@@ -17,15 +17,16 @@ export function ResultsPage() {
   const [selectedBooksModal, setSelectedBooksModal] = useState(false);
   
   const state = location.state as LocationState;
+  const isInvalidState = !state || !state.optimalSets;
   
   useEffect(() => {
-    if (!state || !state.optimalSets) {
+    if (isInvalidState) {
       // 직접 접근한 경우 홈으로 리다이렉트
       navigate('/');
     }
-  }, [state, navigate]);
+  }, [isInvalidState, navigate]);
   
-  if (!state || !state.optimalSets) {
+  if (isInvalidState) {
     return null;
   }
   
