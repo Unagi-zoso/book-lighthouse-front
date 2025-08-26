@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Book } from '../types';
 
 interface BookCoverProps {
@@ -56,7 +56,7 @@ export function BookCover({ book, width = "w-16", height = "h-24", className = "
     };
   };
 
-  const createDynamicCover = (book: Book) => {
+  const dynamicCover = useMemo(() => {
     const { gradient, pattern, firstChar, shortTitle, hash } = generateBookCover(book.title, book.author);
     const hasPattern = Math.abs(hash) % 3 === 0;
     
@@ -85,7 +85,7 @@ export function BookCover({ book, width = "w-16", height = "h-24", className = "
         </div>
       </div>
     );
-  };
+  }, [book.title, book.author, width, height, className]);
 
   if (book.cover && !showFallback) {
     return (
@@ -98,5 +98,5 @@ export function BookCover({ book, width = "w-16", height = "h-24", className = "
     );
   }
 
-  return createDynamicCover(book);
+  return dynamicCover;
 }
