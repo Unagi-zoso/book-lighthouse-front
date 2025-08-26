@@ -190,7 +190,7 @@ export function ResultsPage() {
                     <div className="space-y-2 sm:space-y-3 ml-2 sm:ml-4">
                       {library.books.map((book) => (
                         <div
-                          key={book.isbn}
+                          key={book.isbn13 || book.isbn}
                           className="flex items-center gap-3 sm:gap-4 p-3 bg-white rounded-lg shadow-sm"
                         >
                           <img
@@ -203,7 +203,7 @@ export function ResultsPage() {
                               {book.title}
                             </h5>
                             <p className="text-xs sm:text-sm text-gray-600">
-                              ISBN: {book.isbn}
+                              ISBN: {book.isbn13 || book.isbn}
                             </p>
                           </div>
                         </div>
@@ -236,7 +236,7 @@ export function ResultsPage() {
             <div className="p-6 overflow-y-auto">
               <div className="space-y-4">
                 {selectedBooks.map((book) => (
-                  <div key={book.isbn} className="flex gap-4 p-4 bg-gray-50 rounded-lg">
+                  <div key={book.isbn13 || book.isbn} className="flex gap-4 p-4 bg-gray-50 rounded-lg">
                     <img
                       src={book.cover || '/placeholder.svg?height=120&width=80&query=book cover'}
                       alt={book.title}
@@ -250,7 +250,7 @@ export function ResultsPage() {
                         저자: {book.author}
                       </p>
                       <p className="text-sm text-gray-600">
-                        ISBN: {book.isbn}
+                        ISBN: {book.isbn13 || book.isbn}
                       </p>
                     </div>
                   </div>
