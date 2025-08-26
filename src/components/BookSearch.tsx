@@ -41,7 +41,7 @@ export function BookSearch({ selectedBooks, onBookSelect }: BookSearchProps) {
   };
 
   const isBookSelected = (book: Book) => {
-    return selectedBooks.some(selected => selected.isbn === book.isbn);
+    return selectedBooks.some(selected => selected.isbn13 === book.isbn13);
   };
 
   const canSelectMore = selectedBooks.length < 3;
@@ -95,7 +95,7 @@ export function BookSearch({ selectedBooks, onBookSelect }: BookSearchProps) {
             <div className="space-y-3 sm:space-y-4">
               {books.map((book) => (
                 <BookCard
-                  key={book.isbn}
+                  key={book.isbn13 || book.isbn}
                   book={book}
                   isSelected={isBookSelected(book)}
                   onSelect={onBookSelect}

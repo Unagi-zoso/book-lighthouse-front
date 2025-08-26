@@ -22,13 +22,13 @@ export function HomePage() {
 
   const handleBookSelect = (book: Book) => {
     setSelectedBooks(prev => {
-      const isAlreadySelected = prev.some(selected => selected.isbn === book.isbn);
+      const isAlreadySelected = prev.some(selected => (selected.isbn13 || selected.isbn) === (book.isbn13 || book.isbn));
       
       if (isAlreadySelected) {
-        return prev.filter(selected => selected.isbn !== book.isbn);
+        return prev.filter(selected => (selected.isbn13 || selected.isbn) !== (book.isbn13 || book.isbn));
       } else if (prev.length < 3) {
         // 책 선택 이벤트 추적
-        trackBookSelect(book.title, book.isbn);
+        trackBookSelect(book.title, book.isbn13 || book.isbn);
         return [...prev, book];
       }
       
@@ -37,7 +37,7 @@ export function HomePage() {
   };
 
   const handleBookRemove = (isbn: string) => {
-    setSelectedBooks(prev => prev.filter(book => book.isbn !== isbn));
+    setSelectedBooks(prev => prev.filter(book => (book.isbn13 || book.isbn) !== isbn));
   };
 
   const handleCalculateOptimal = async () => {
@@ -51,11 +51,11 @@ export function HomePage() {
     // Sentry 브레드크럼 추가
     addBreadcrumb('Starting optimal calculation', 'user_action', {
       book_count: selectedBooks.length,
-      book_isbns: selectedBooks.map(book => book.isbn)
+      book_isbns: selectedBooks.map(book => book.isbn13 || book.isbn)
     });
     
     try {
-      const isbns = selectedBooks.map(book => book.isbn13);
+      const isbns = selectedBooks.map(book => book.isbn13 || book.isbn);
       const response = await calculateOptimalLibraries(isbns);
       
       // 성공 로그
@@ -80,7 +80,7 @@ export function HomePage() {
         book_count: selectedBooks.length,
         selected_books: selectedBooks.map(book => ({
           title: book.title,
-          isbn: book.isbn
+          isbn: book.isbn13 || book.isbn
         }))
       });
       

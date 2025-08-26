@@ -35,7 +35,7 @@ export function SelectedBooks({ books, onRemove, onCalculate, isCalculating }: S
       </CardHeader>
       <CardContent className="space-y-3 sm:space-y-4 pt-0">
         {books.map((book) => (
-          <div key={book.isbn} className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm">
+          <div key={book.isbn13 || book.isbn} className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm">
             <img
               src={book.cover || '/placeholder.svg?height=60&width=40&query=book cover'}
               alt={book.title}
@@ -48,7 +48,7 @@ export function SelectedBooks({ books, onRemove, onCalculate, isCalculating }: S
             <Button
               size="sm"
               variant="ghost"
-              onClick={() => onRemove(book.isbn)}
+              onClick={() => onRemove(book.isbn13 || book.isbn)}
               className="text-red-500 hover:text-red-700 hover:bg-red-50 min-w-[2rem] h-8"
             >
               <X className="w-3 h-3 sm:w-4 sm:h-4" />

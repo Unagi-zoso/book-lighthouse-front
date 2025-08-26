@@ -63,7 +63,7 @@ export function OptimalLibraries({ optimalSets }: OptimalLibrariesProps) {
                 <div className="space-y-2 sm:space-y-3 ml-2 sm:ml-4">
                   {library.books.map((book) => (
                     <div
-                      key={book.isbn}
+                      key={book.isbn13 || book.isbn}
                       className="flex items-center gap-3 sm:gap-4 p-3 bg-white rounded-lg shadow-sm"
                     >
                       <img
@@ -76,7 +76,7 @@ export function OptimalLibraries({ optimalSets }: OptimalLibrariesProps) {
                           {book.title}
                         </h5>
                         <p className="text-xs sm:text-sm text-gray-600">
-                          ISBN: {book.isbn}
+                          ISBN: {book.isbn13 || book.isbn}
                         </p>
                       </div>
                     </div>
