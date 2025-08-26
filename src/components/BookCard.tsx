@@ -4,6 +4,7 @@ import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Plus, Check } from 'lucide-react';
+import { BookCover } from './BookCover';
 
 interface BookCardProps {
   book: Book;
@@ -18,10 +19,10 @@ export function BookCard({ book, isSelected, onSelect, disabled }: BookCardProps
       <CardContent className="p-3 sm:p-4">
         <div className="flex gap-3 sm:gap-4">
           <div className="relative flex-shrink-0">
-            <img
-              src={book.cover || '/placeholder.svg?height=120&width=80&query=book cover'}
-              alt={book.title}
-              className="w-16 h-24 sm:w-20 sm:h-28 rounded-lg shadow-md object-cover"
+            <BookCover
+              book={book}
+              width="w-16 sm:w-20"
+              height="h-24 sm:h-28"
             />
           </div>
           
@@ -51,7 +52,11 @@ export function BookCard({ book, isSelected, onSelect, disabled }: BookCardProps
               <Badge variant="secondary" className="text-xs bg-blue-100 text-blue-700">
                 {book.publisher}
               </Badge>
-              <p className="text-xs text-gray-500">{book.pubDate}</p>
+              {book.pubDate && (
+                <p className="text-xs text-gray-500">
+                  출간연도: {book.pubDate.substring(0, 4)}
+                </p>
+              )}
             </div>
             
             <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed hidden sm:block">

@@ -3,6 +3,7 @@ import { OptimalLibrarySet } from '../types';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { MapPin, Building2, CheckCircle } from 'lucide-react';
+import { BookCover } from './BookCover';
 
 interface OptimalLibrariesProps {
   optimalSets: OptimalLibrarySet[];
@@ -66,10 +67,11 @@ export function OptimalLibraries({ optimalSets }: OptimalLibrariesProps) {
                       key={book.isbn13 || book.isbn}
                       className="flex items-center gap-3 sm:gap-4 p-3 bg-white rounded-lg shadow-sm"
                     >
-                      <img
-                        src={book.cover || '/placeholder.svg?height=80&width=60&query=book cover'}
-                        alt={book.title}
-                        className="w-12 h-16 sm:w-15 sm:h-20 rounded object-cover flex-shrink-0"
+                      <BookCover
+                        book={book}
+                        width="w-12 sm:w-15"
+                        height="h-16 sm:h-20"
+                        className="flex-shrink-0"
                       />
                       <div className="flex-1 min-w-0">
                         <h5 className="font-medium text-gray-900 mb-1 text-sm sm:text-base line-clamp-2">

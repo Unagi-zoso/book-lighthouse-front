@@ -3,6 +3,7 @@ import { Book } from '../types';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { X, BookOpen } from 'lucide-react';
+import { BookCover } from './BookCover';
 
 interface SelectedBooksProps {
   books: Book[];
@@ -36,10 +37,11 @@ export function SelectedBooks({ books, onRemove, onCalculate, isCalculating }: S
       <CardContent className="space-y-3 sm:space-y-4 pt-0">
         {books.map((book) => (
           <div key={book.isbn13 || book.isbn} className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm">
-            <img
-              src={book.cover || '/placeholder.svg?height=60&width=40&query=book cover'}
-              alt={book.title}
-              className="w-8 h-12 sm:w-10 sm:h-15 rounded object-cover flex-shrink-0"
+            <BookCover
+              book={book}
+              width="w-8 sm:w-10"
+              height="h-12 sm:h-15"
+              className="flex-shrink-0"
             />
             <div className="flex-1 min-w-0">
               <h4 className="font-medium text-sm line-clamp-1">{book.title}</h4>
