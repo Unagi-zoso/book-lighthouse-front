@@ -45,11 +45,11 @@ export function ResultsPage() {
                   <Waves className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" />
                   <BookOpen className="w-3 h-3 sm:w-4 sm:h-4 text-purple-600 absolute -bottom-0.5 -right-0.5 sm:-bottom-1 sm:-right-1" />
                 </div>
-                <div>
-                  <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <div className="min-w-0 flex-1">
+                  <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                     책등대
                   </h1>
-                  <p className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1">
+                  <p className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1 line-clamp-1">
                     검색 결과
                   </p>
                 </div>
@@ -60,16 +60,18 @@ export function ResultsPage() {
                     href={import.meta.env.VITE_BOOKBADA_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-xs sm:text-sm font-medium"
+                    className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 lg:px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-xs sm:text-sm font-medium whitespace-nowrap"
                   >
-                    <span>책바다 바로가기</span>
+                    <span className="hidden sm:inline">책바다 바로가기</span>
+                    <span className="sm:hidden">책바다</span>
                     <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
                   </a>
                 )}
                 <Link to="/">
-                  <Button variant="outline" className="flex items-center gap-2">
-                    <ArrowLeft className="w-4 h-4" />
-                    다시 검색
+                  <Button variant="outline" className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm px-2 sm:px-4">
+                    <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4" />
+                    <span className="hidden sm:inline">다시 검색</span>
+                    <span className="sm:hidden">검색</span>
                   </Button>
                 </Link>
               </div>
@@ -88,8 +90,9 @@ export function ResultsPage() {
                 선택한 책들을 모두 대출할 수 있는 도서관 조합을 찾을 수 없습니다.
               </p>
               <Link to="/">
-                <Button className="bg-red-600 hover:bg-red-700">
-                  다른 책으로 다시 검색
+                <Button className="bg-red-600 hover:bg-red-700 text-sm px-4 py-2">
+                  <span className="hidden sm:inline">다른 책으로 다시 검색</span>
+                  <span className="sm:hidden">다시 검색</span>
                 </Button>
               </Link>
             </CardContent>
@@ -110,39 +113,43 @@ export function ResultsPage() {
                 <Waves className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" />
                 <BookOpen className="w-3 h-3 sm:w-4 sm:h-4 text-purple-600 absolute -bottom-0.5 -right-0.5 sm:-bottom-1 sm:-right-1" />
               </div>
-              <div>
-                <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <div className="min-w-0 flex-1">
+                <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   책등대
                 </h1>
-                <p className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1">
-                  검색 결과 - {optimalSets.length}개의 조합을 찾았습니다
+                <p className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1 line-clamp-1">
+                  <span className="hidden sm:inline">검색 결과 - {optimalSets.length}개의 조합을 찾았습니다</span>
+                  <span className="sm:hidden">{optimalSets.length}개 조합</span>
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 sm:gap-2">
               {import.meta.env.VITE_BOOKBADA_URL && (
                 <a
                   href={import.meta.env.VITE_BOOKBADA_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-xs sm:text-sm font-medium"
+                  className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 lg:px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-xs sm:text-sm font-medium whitespace-nowrap"
                 >
-                  <span>책바다 바로가기</span>
+                  <span className="hidden sm:inline">책바다 바로가기</span>
+                  <span className="sm:hidden">책바다</span>
                   <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
                 </a>
               )}
               <Button
                 variant="outline"
                 onClick={() => setSelectedBooksModal(true)}
-                className="flex items-center gap-2"
+                className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm px-2 sm:px-4"
               >
-                <Eye className="w-4 h-4" />
-                선택한 책 보기
+                <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">선택한 책 보기</span>
+                <span className="sm:hidden">책 보기</span>
               </Button>
               <Link to="/">
-                <Button variant="outline" className="flex items-center gap-2">
-                  <ArrowLeft className="w-4 h-4" />
-                  다시 검색
+                <Button variant="outline" className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm px-2 sm:px-4">
+                  <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="hidden sm:inline">다시 검색</span>
+                  <span className="sm:hidden">검색</span>
                 </Button>
               </Link>
             </div>
