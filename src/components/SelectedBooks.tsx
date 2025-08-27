@@ -8,11 +8,9 @@ import { BookCover } from './BookCover';
 interface SelectedBooksProps {
   books: Book[];
   onRemove: (isbn: string) => void;
-  onCalculate: () => void;
-  isCalculating: boolean;
 }
 
-export function SelectedBooks({ books, onRemove, onCalculate, isCalculating }: SelectedBooksProps) {
+export function SelectedBooks({ books, onRemove }: SelectedBooksProps) {
   if (books.length === 0) {
     return (
       <Card className="bg-gradient-to-br from-gray-50 to-blue-50/30 border-dashed border-2 border-gray-200">
@@ -58,13 +56,6 @@ export function SelectedBooks({ books, onRemove, onCalculate, isCalculating }: S
           </div>
         ))}
         
-        <Button
-          onClick={onCalculate}
-          disabled={isCalculating}
-          className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium py-3 sm:py-4 text-sm sm:text-base"
-        >
-          {isCalculating ? '계산 중...' : '최적 도서관 찾기'}
-        </Button>
       </CardContent>
     </Card>
   );

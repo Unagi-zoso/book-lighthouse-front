@@ -5,6 +5,7 @@ import { calculateOptimalLibraries } from '../lib/api';
 import { BookSearch } from '../components/BookSearch';
 import { SelectedBooks } from '../components/SelectedBooks';
 import { Card, CardContent } from '../components/ui/card';
+import { Button } from '../components/ui/button';
 import { Waves, BookOpen, ExternalLink } from 'lucide-react';
 import { useAnalytics } from '../hooks/useAnalytics';
 import { useSentry } from '../hooks/useSentry';
@@ -143,12 +144,37 @@ export function HomePage() {
               <SelectedBooks
                 books={selectedBooks}
                 onRemove={handleBookRemove}
-                onCalculate={handleCalculateOptimal}
-                isCalculating={isCalculating}
               />
             </div>
           </div>
         </div>
+
+        {/* Floating Action Button */}
+        {selectedBooks.length > 0 && (
+          <div className="fixed bottom-6 right-6 z-50">
+            <div className="relative">
+              <Button
+                onClick={handleCalculateOptimal}
+                disabled={isCalculating}
+                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium px-6 py-4 text-base rounded-full shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+              >
+                {isCalculating ? (
+                  <>
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                    계산 중...
+                  </>
+                ) : (
+                  <>
+                    최적 도서관 찾기
+                    <div className="ml-2 bg-white/20 px-2 py-1 rounded-full text-sm">
+                      {selectedBooks.length}/3
+                    </div>
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+        )}
 
         {/* Welcome Message */}
         {selectedBooks.length === 0 && (
