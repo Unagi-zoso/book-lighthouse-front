@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Book } from '../types';
 import { calculateOptimalLibraries } from '../lib/api';
 import { BookSearch } from '../components/BookSearch';
@@ -98,7 +98,7 @@ export function HomePage() {
       <header className="bg-white/80 backdrop-blur-sm border-b border-blue-100 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 sm:gap-3">
+            <Link to="/" className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-opacity">
               <div className="relative">
                 <Waves className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" />
                 <BookOpen className="w-3 h-3 sm:w-4 sm:h-4 text-purple-600 absolute -bottom-0.5 -right-0.5 sm:-bottom-1 sm:-right-1" />
@@ -111,7 +111,7 @@ export function HomePage() {
                   책바다 서비스를 위한 최적 도서관 조합 도구
                 </p>
               </div>
-            </div>
+            </Link>
             
             {import.meta.env.VITE_BOOKBADA_URL && (
               <a
