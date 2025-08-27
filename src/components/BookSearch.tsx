@@ -5,6 +5,7 @@ import { Input } from './ui/input';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 import { BookCard } from './BookCard';
+import { Pagination } from './Pagination';
 import { Search, Loader2 } from 'lucide-react';
 
 interface BookSearchProps {
@@ -17,18 +18,33 @@ export function BookSearch({ selectedBooks, onBookSelect }: BookSearchProps) {
   const [books, setBooks] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pagination, setPagination] = useState<{
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  } | null>(null);
 
-  const handleSearch = async () => {
+  const handleSearch = async (page: number = 1) => {
     if (!searchTerm.trim()) return;
 
     setIsLoading(true);
     try {
-      const response = await searchBooks(searchTerm);
+      const response = await searchBooks(searchTerm, page, 5);
       setBooks(response.data.books);
+      setPagination(response.data.pagination);
+      setCurrentPage(page);
       setHasSearched(true);
+      
+      // Scroll to top when page changes
+      if (page > 1) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     } catch (error) {
       console.error('Search failed:', error);
       setBooks([]);
+      setPagination(null);
     } finally {
       setIsLoading(false);
     }
@@ -36,7 +52,8 @@ export function BookSearch({ selectedBooks, onBookSelect }: BookSearchProps) {
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      handleSearch();
+      setCurrentPage(1);
+      handleSearch(1);
     }
   };
 
@@ -62,7 +79,10 @@ export function BookSearch({ selectedBooks, onBookSelect }: BookSearchProps) {
               />
             </div>
             <Button
-              onClick={handleSearch}
+              onClick={() => {
+                setCurrentPage(1);
+                handleSearch(1);
+              }}
               disabled={isLoading || !searchTerm.trim()}
               className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-medium text-sm sm:text-base min-h-[3rem] sm:min-h-[3.5rem]"
             >
@@ -79,7 +99,7 @@ export function BookSearch({ selectedBooks, onBookSelect }: BookSearchProps) {
       {hasSearched && (
         <div className="space-y-3 sm:space-y-4">
           <h2 className="text-lg sm:text-xl font-semibold text-gray-900 px-1">
-            검색 결과 ({books.length}권)
+            검색 결과 {pagination && `(${pagination.total}권 중 ${books.length}권 표시)`}
           </h2>
           
           {books.length === 0 ? (
@@ -92,17 +112,30 @@ export function BookSearch({ selectedBooks, onBookSelect }: BookSearchProps) {
               </CardContent>
             </Card>
           ) : (
-            <div className="space-y-3 sm:space-y-4">
-              {books.map((book) => (
-                <BookCard
-                  key={book.isbn13 || book.isbn}
-                  book={book}
-                  isSelected={isBookSelected(book)}
-                  onSelect={onBookSelect}
-                  disabled={!canSelectMore && !isBookSelected(book)}
-                />
-              ))}
-            </div>
+            <>
+              <div className="space-y-3 sm:space-y-4">
+                {books.map((book) => (
+                  <BookCard
+                    key={book.isbn13 || book.isbn}
+                    book={book}
+                    isSelected={isBookSelected(book)}
+                    onSelect={onBookSelect}
+                    disabled={!canSelectMore && !isBookSelected(book)}
+                  />
+                ))}
+              </div>
+              
+              {pagination && pagination.totalPages > 1 && (
+                <div className="flex justify-center pt-4 sm:pt-6">
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={pagination.totalPages}
+                    onPageChange={handleSearch}
+                    className="bg-white rounded-lg border border-gray-200 p-2 sm:p-3 shadow-sm"
+                  />
+                </div>
+              )}
+            </>
           )}
         </div>
       )}
